@@ -1,0 +1,17 @@
+Unhappy with the state of bulk wallet generation, I wrote my own.
+
+Requires Mako (http://www.makotemplates.org/),
+Vanitygen (https://github.com/samr7/vanitygen), LaTeX, and 
+the pst-barcode package (http://texdoc.net/texmf-dist/doc/generic/pst-barcode/pst-barcode-doc.pdf),
+which is part of PSTricks.
+
+Usage:
+
+./gen-latex-wallets.py > out.tex
+latex out.tex
+dvipdf out.dvi
+evince out.pdf
+
+To clean up:
+
+shred -u out.*
