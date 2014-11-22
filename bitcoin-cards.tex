@@ -1,0 +1,74 @@
+<%!
+    import itertools
+%>
+
+%%
+%% format for card containing multiple barcodes:
+%%  eg. loyalty cards, club cards, etc.
+%%
+%% based on ticket.sty example file for visiting cards
+%%
+%% build with:
+%%   latex barcode-card.tex
+%%   dvipdf barcode-card.dvi
+%% (uses pstricks; doesn't work with pdflatex)
+%%
+%%%%
+%% use the corresponding paper size for your ticket definition
+\documentclass[letterpaper,10pt]{letter}
+
+%% load ticket.sty with the appropriate ticket definition
+\usepackage[crossmark]{ticket}
+%%\usepackage[boxed]{ticket}
+
+%% load misc stuff
+\usepackage{rotating}
+
+\usepackage{pst-barcode}
+
+%% make your default ticket. \ticketdefault is somewhat like a background
+%% here it is empty, because we use different tickets for the front an
+%% the back of our card
+\renewcommand{\ticketdefault}{%
+}
+
+
+\begin{document}
+\sffamily
+
+%% ticket settings
+\unitlength=1mm
+
+\hoffset=-7mm
+\voffset=-9mm
+
+\ticketNumbers{2}{4}
+\ticketSize{84}{52} % in unitlength   %% credit card size; lamination adds a 1mm border -kr
+\ticketDistance{6}{6}    %in unitlength
+
+%%% FRONT
+
+% for key in keys:
+\ticket{%
+  \put(10,15){
+    \psbarcode{${key['address']}}{eclevel=M height=1.0 width=1.0 }{qrcode}
+  }
+  \put(10,5){\small ${key['address']}}
+
+}%
+% endfor
+
+
+%%% BACK
+
+% for key in itertools.chain(keys[4:], keys[0:4]):
+\ticket{%
+  \put(10,15){
+    \psbarcode{${key['privkey']}}{eclevel=M height=1.0 width=1.0 }{qrcode}
+  }
+  \put(10,5){\tiny ${key['privkey']}}
+
+}%
+% endfor
+
+\end{document}

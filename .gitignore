@@ -1,0 +1,7 @@
+*.pyc
+.*.swp
+*.tex
+*.log
+*.aux
+*.toc
+*.pdf
